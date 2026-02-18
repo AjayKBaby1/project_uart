@@ -4,8 +4,13 @@ SIZE    = arm-none-eabi-size
 
 MCU = cortex-m4
 
+INCLUDES = \
+	-I../Core/Inc \
+	-I../Drivers/CMSIS/Include \
+	-I../Drivers/CMSIS/Device/ST/STM32F3xx/Include
+
 CFLAGS = -mcpu=$(MCU) -mthumb -O2 -g -Wall \
-	-ICore/Inc \
+	$(INCLUDES) \
 	-ffunction-sections -fdata-sections
 
 LDSCRIPT = ../Linker/linker_script.ld
