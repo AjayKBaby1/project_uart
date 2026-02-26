@@ -4,8 +4,8 @@
 #include "stm32f303x8.h"
 #include <stdint.h>
  
-#define LED_PORT GPIOA
-#define LED_PIN  5
+#define LED_PORT GPIOB
+#define LED_PIN  3
  
 void LED_Init(void);
 void LED_On(void);

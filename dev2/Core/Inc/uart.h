@@ -1,5 +1,5 @@
-#ifndef INC_UART_BARE_H_
-#define INC_UART_BARE_H_
+#ifndef INC_UART_H_
+#define INC_UART_H_
  
 #include "stm32f303x8.h"
 #include <stdint.h>

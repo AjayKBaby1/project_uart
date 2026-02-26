@@ -1,5 +1,5 @@
 #ifdef DEV1
-#include "uart_bare.h"
+#include "uart.h"
 #include <stdint.h>
  
 #define UART2_TX_PIN 2  // Optional terminal TX
