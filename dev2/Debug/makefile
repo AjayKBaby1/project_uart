@@ -1,53 +1,67 @@
 CC      = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 SIZE    = arm-none-eabi-size
-
+ 
 MCU = cortex-m4
-
+ 
+# Include paths
 INCLUDES = \
 	-I../Core/Inc \
 	-I../Drivers/CMSIS/Include \
 	-I../Drivers/CMSIS/Device/ST/STM32F3xx/Include
-
+ 
+# Compiler flags
 CFLAGS = -mcpu=$(MCU) -mthumb -O2 -g -Wall \
 	$(INCLUDES) \
 	-ffunction-sections -fdata-sections
-
+ 
+# Linker script
 LDSCRIPT = ../Linker/linker_script.ld
 LDFLAGS  = -T $(LDSCRIPT) -nostartfiles -Wl,--gc-sections
-
-BUILD = ../build
-
+ 
+# Build folder
+BUILD = build
+ 
+# Source files for Dev2 only
 SRCS = $(wildcard ../Core/Src/*.c)
 SRCS += $(wildcard ../Core/startup/*.c)
-
-OBJS = $(patsubst ../Core/%, $(BUILD)/Core/%, $(SRCS:.c=.o))
-
-TARGET = $(BUILD)/project.elf
-BIN    = $(BUILD)/project.bin
-
+ 
+# Object files inside build folder
+OBJS = $(patsubst ../Core/%, $(BUILD)/%, $(SRCS:.c=.o))
+ 
+# Targets
+TARGET = $(BUILD)/dev2_project.elf
+BIN    = $(BUILD)/dev2_project.bin
+ 
+# Default target
 all: $(TARGET) $(BIN) size
-
+ 
+# Link
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
-
+ 
+# Generate binary
 $(BIN): $(TARGET)
 	$(OBJCOPY) -O binary $< $@
-
+ 
+# Show size
 size: $(TARGET)
 	$(SIZE) $<
-
-$(BUILD)/Core/Src/%.o: ../Core/Src/%.c | $(BUILD)
+ 
+# Compile Src files
+$(BUILD)/Src/%.o: ../Core/Src/%.c | $(BUILD)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
-
-$(BUILD)/Core/startup/%.o: ../Core/startup/%.c | $(BUILD)
+ 
+# Compile startup files
+$(BUILD)/startup/%.o: ../Core/startup/%.c | $(BUILD)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
-
+ 
+# Create build folder
 $(BUILD):
 	@mkdir -p $@
-
+ 
+# Clean
 clean:
 	rm -rf $(BUILD)
-
