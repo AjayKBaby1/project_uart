@@ -1,0 +1,140 @@
+.
+├── dev1
+│   ├── Core
+│   │   ├── Inc
+│   │   │   ├── clock.h
+│   │   │   ├── timer.h
+│   │   │   └── uart.h
+│   │   ├── Src
+│   │   │   ├── clock.c
+│   │   │   ├── IRQ_UART.c
+│   │   │   ├── main.c
+│   │   │   ├── timer.c
+│   │   │   └── uart.c
+│   │   └── startup
+│   │       └── startup.c
+│   └── Debug
+│       ├── build
+│       │   ├── Core
+│       │   │   ├── Src
+│       │   │   │   ├── clock.o
+│       │   │   │   ├── main.o
+│       │   │   │   └── timer.o
+│       │   │   └── startup
+│       │   │       └── startup.o
+│       │   ├── project.bin
+│       │   └── project.elf
+│       └── makefile
+├── dev2
+│   ├── Core
+│   │   ├── Inc
+│   │   │   ├── clock.h
+│   │   │   ├── led.h
+│   │   │   ├── timer.h
+│   │   │   └── uart.h
+│   │   ├── Src
+│   │   │   ├── clock.c
+│   │   │   ├── IRQ_UART.c
+│   │   │   ├── led.c
+│   │   │   ├── main.c
+│   │   │   ├── timer.c
+│   │   │   └── uart.c
+│   │   └── startup
+│   │       └── startup.c
+│   └── Debug
+│       ├── build
+│       │   ├── Core
+│       │   │   ├── Src
+│       │   │   │   ├── clock.o
+│       │   │   │   ├── main.o
+│       │   │   │   └── timer.o
+│       │   │   └── startup
+│       │   │       └── startup.o
+│       │   ├── project.bin
+│       │   ├── project.elf
+│       │   └── Src
+│       └── makefile
+├── Drivers
+│   └── CMSIS
+│       ├── Device
+│       │   └── ST
+│       │       └── STM32F3xx
+│       │           ├── Include
+│       │           │   ├── stm32f303x8.h
+│       │           │   ├── .stm32f303x8.h.swp
+│       │           │   ├── stm32f3xx.h
+│       │           │   └── system_stm32f3xx.h
+│       │           └── LICENSE.txt
+│       ├── Include
+│       │   ├── cmsis_armcc.h
+│       │   ├── cmsis_armclang.h
+│       │   ├── cmsis_compiler.h
+│       │   ├── cmsis_gcc.h
+│       │   ├── cmsis_iccarm.h
+│       │   ├── cmsis_version.h
+│       │   ├── core_armv8mbl.h
+│       │   ├── core_armv8mml.h
+│       │   ├── core_cm0.h
+│       │   ├── core_cm0plus.h
+│       │   ├── core_cm1.h
+│       │   ├── core_cm23.h
+│       │   ├── core_cm33.h
+│       │   ├── core_cm3.h
+│       │   ├── core_cm4.h
+│       │   ├── core_cm7.h
+│       │   ├── core_sc000.h
+│       │   ├── core_sc300.h
+│       │   ├── mpu_armv7.h
+│       │   ├── mpu_armv8.h
+│       │   └── tz_context.h
+│       └── LICENSE.txt
+├── .git
+│   ├── config
+│   ├── description
+│   ├── HEAD
+│   ├── hooks
+│   │   ├── applypatch-msg.sample
+│   │   ├── commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-merge-commit.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── pre-push.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── pre-receive.sample
+│   │   ├── push-to-checkout.sample
+│   │   ├── sendemail-validate.sample
+│   │   └── update.sample
+│   ├── index
+│   ├── info
+│   │   └── exclude
+│   ├── logs
+│   │   ├── HEAD
+│   │   └── refs
+│   │       ├── heads
+│   │       │   └── main
+│   │       └── remotes
+│   │           └── origin
+│   │               └── HEAD
+│   ├── objects
+│   │   ├── info
+│   │   └── pack
+│   │       ├── pack-0fc24fe750610e8bf52a2536eff87fa45ffcb2a4.idx
+│   │       ├── pack-0fc24fe750610e8bf52a2536eff87fa45ffcb2a4.pack
+│   │       └── pack-0fc24fe750610e8bf52a2536eff87fa45ffcb2a4.rev
+│   ├── packed-refs
+│   └── refs
+│       ├── heads
+│       │   └── main
+│       ├── remotes
+│       │   └── origin
+│       │       └── HEAD
+│       └── tags
+├── Linker
+│   └── linker_script.ld
+├── README.md
+└── structure.txt
+
+46 directories, 92 files

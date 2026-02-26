@@ -1,67 +1,110 @@
+########################################
+# TOOLCHAIN
+########################################
 CC      = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 SIZE    = arm-none-eabi-size
 
+########################################
+# MCU SETTINGS (STM32F303 - Cortex-M4F)
+########################################
 MCU = cortex-m4
 
-# Include paths
+CPU_FLAGS = -mcpu=$(MCU) -mthumb \
+            -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+
+########################################
+# INCLUDE PATHS
+########################################
 INCLUDES = \
-	-I../../Core/Inc \
+	-I../Core/Inc \
 	-I../../Drivers/CMSIS/Include \
 	-I../../Drivers/CMSIS/Device/ST/STM32F3xx/Include
 
-# Compiler flags
-CFLAGS = -mcpu=$(MCU) -mthumb -O2 -g -Wall \
-	$(INCLUDES) \
-	-ffunction-sections -fdata-sections
+########################################
+# COMPILER FLAGS
+########################################
+CFLAGS = $(CPU_FLAGS) -O2 -g -Wall \
+         -ffunction-sections -fdata-sections \
+         -DSTM32F303x8 \
+         -DDEV1 \
+         $(INCLUDES)
 
-# Linker script
-LDSCRIPT = ../Linker/linker_script.ld
-LDFLAGS  = -T $(LDSCRIPT) -nostartfiles -Wl,--gc-sections
+########################################
+# LINKER
+########################################
+LDSCRIPT = ../../Linker/linker_script.ld
 
-# Build folder
+LDFLAGS = $(CPU_FLAGS) -T $(LDSCRIPT) \
+          -Wl,--gc-sections -nostartfiles
+
+########################################
+# BUILD DIRECTORY
+########################################
 BUILD = build
 
-# Source files for Dev1 only
+########################################
+# SOURCE FILES
+########################################
 SRCS = $(wildcard ../Core/Src/*.c)
 SRCS += $(wildcard ../Core/startup/*.c)
 
-# Object files inside build folder
+########################################
+# OBJECT FILES
+########################################
 OBJS = $(patsubst ../Core/%, $(BUILD)/%, $(SRCS:.c=.o))
 
-# Targets
+########################################
+# TARGETS
+########################################
 TARGET = $(BUILD)/dev1_project.elf
 BIN    = $(BUILD)/dev1_project.bin
 
-# Default target
+########################################
+# DEFAULT
+########################################
 all: $(TARGET) $(BIN) size
 
-# Link
+########################################
+# LINK
+########################################
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
 
-# Generate binary
+########################################
+# GENERATE BINARY
+########################################
 $(BIN): $(TARGET)
 	$(OBJCOPY) -O binary $< $@
 
-# Show size
+########################################
+# SHOW SIZE
+########################################
 size: $(TARGET)
 	$(SIZE) $<
 
-# Compile Src files
+########################################
+# COMPILE CORE SRC
+########################################
 $(BUILD)/Src/%.o: ../Core/Src/%.c | $(BUILD)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Compile startup files
+########################################
+# COMPILE STARTUP
+########################################
 $(BUILD)/startup/%.o: ../Core/startup/%.c | $(BUILD)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Create build folder
+########################################
+# CREATE BUILD FOLDER
+########################################
 $(BUILD):
 	@mkdir -p $@
 
-# Clean
+########################################
+# CLEAN
+########################################
 clean:
 	rm -rf $(BUILD)
