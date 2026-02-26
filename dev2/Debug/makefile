@@ -6,9 +6,9 @@ MCU = cortex-m4
  
 # Include paths
 INCLUDES = \
-	-I../Core/Inc \
-	-I../Drivers/CMSIS/Include \
-	-I../Drivers/CMSIS/Device/ST/STM32F3xx/Include
+	-I../../Core/Inc \
+	-I../../Drivers/CMSIS/Include \
+	-I../../Drivers/CMSIS/Device/ST/STM32F3xx/Include
  
 # Compiler flags
 CFLAGS = -mcpu=$(MCU) -mthumb -O2 -g -Wall \
