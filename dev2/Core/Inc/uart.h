@@ -4,7 +4,7 @@
 #include "stm32f303x8.h"
 #include <stdint.h>
 
-#define UART_FRAME_SIZE 3
+#define UART_FRAME_SIZE 5
 
 // Shared variables
 extern volatile uint8_t rx_buffer[UART_FRAME_SIZE];

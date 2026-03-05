@@ -37,30 +37,35 @@ void UART_Send_IT(uint8_t *data, uint8_t length) {
     }
 }
 
-// USART1 IRQ Handler
 void USART1_IRQHandler(void) {
     uint32_t isr = USART1->ISR;
 
-    // RXNE: new byte received
     if(isr & USART_ISR_RXNE) {
         uint8_t data = (uint8_t)USART1->RDR;
-        if(rx_index < UART_FRAME_SIZE) {
-            rx_buffer[rx_index++] = data;
-        }
-        if(rx_index == UART_FRAME_SIZE) {
-            rx_ready = 1;  // full frame received
+
+        // NEW: Sync logic - only start filling if we see the START_BYTE
+        // or if we are already in the middle of a frame.
+        if (rx_index == 0 && data != 0xAA) {
+            // Ignore noise until we see 0xAA
+        } else {
+            if(rx_index < UART_FRAME_SIZE) {
+                rx_buffer[rx_index++] = data;
+            }
+            if(rx_index == UART_FRAME_SIZE) {
+                rx_ready = 1; 
+            }
         }
     }
 
-    // TXE: transmit complete
     if((isr & USART_ISR_TXE) && (USART1->CR1 & USART_CR1_TXEIE)) {
         USART1->CR1 &= ~USART_CR1_TXEIE;
         tx_busy = 0;
     }
 
-    // Clear errors
     if(isr & (USART_ISR_ORE | USART_ISR_NE | USART_ISR_FE)) {
         USART1->ICR = USART_ICR_ORECF | USART_ICR_NCF | USART_ICR_FECF;
         (void)USART1->RDR;
+        // Optional: Reset rx_index on error to restart sync
+        rx_index = 0;
     }
 }
