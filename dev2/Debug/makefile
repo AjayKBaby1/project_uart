@@ -24,7 +24,7 @@ INCLUDES = \
 ########################################
 # COMPILER FLAGS
 ########################################
-CFLAGS = $(CPU_FLAGS) -O2 -g -Wall \
+CFLAGS = $(CPU_FLAGS) -O0 -g -Wall \
          -ffunction-sections -fdata-sections \
          -DSTM32F303x8 \
          -DDEV2 \

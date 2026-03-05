@@ -1,17 +1,26 @@
-#ifdef DEV2
 #include "uart.h"
-#include "led.h"
- 
-int main(void)
-{
-    LED_Init();         // LED on PB3
-    UART_Init(115200);  // UART1 to Dev1
- 
-    while(1)
-    {
-        // Everything handled by interrupt
-        // RX interrupt increments and sends back
+
+int main(void) {
+    UART_Init();
+    __enable_irq();
+
+    uint8_t result[UART_FRAME_SIZE];
+
+    while(1) {
+        if(rx_ready) {
+            // Increment each received byte
+            for(uint8_t i=0; i<UART_FRAME_SIZE; i++) {
+                result[i] = rx_buffer[i] + 1;
+            }
+
+            // Send back to TX
+            UART_Send_IT(result, UART_FRAME_SIZE);
+
+            // Reset for next frame
+            rx_ready = 0;
+            rx_index = 0;
+
+            __WFI();
+        }
     }
 }
-#endif
-
